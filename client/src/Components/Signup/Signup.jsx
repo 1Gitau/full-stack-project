@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Signup.css";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
+import { Link } from "react-router-dom";
 import apiBase from "../../utils/apiUrl.js";
 
 import { Toaster, toast } from "sonner";
@@ -17,7 +18,7 @@ function Signup() {
 
   const navigate = useNavigate();
 
-  const {mutate, isLoading, isError, error} = useMutation({
+  const { mutate, isLoading, isError, error } = useMutation({
     mutationFn: async (userDetails) => {
       const response = await fetch(`${apiBase}/register`, {
         method: "POST",
@@ -27,7 +28,7 @@ function Signup() {
         body: JSON.stringify(userDetails),
       });
 
-      if (response.ok === false){
+      if (response.ok === false) {
         const error = await response.json();
         throw new Error(error.message);
       }
@@ -46,7 +47,7 @@ function Signup() {
       toast.error(error.message, {
         duration: 3000,
       });
-    }
+    },
   });
   function handleSubmit(e) {
     e.preventDefault();
@@ -131,11 +132,22 @@ function Signup() {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
-        <button type="submit" className="signup-button" 
-        disabled={isLoading}
-        onClick={handleSubmit}>
+        <button
+          type="submit"
+          className="signup-button"
+          disabled={isLoading}
+          onClick={handleSubmit}
+        >
           {isLoading ? "Loading..." : "Signup"}
         </button>
+        <p className="mt-2 text-center">
+          Already have an account?{" "}
+          <span>
+            <Link to="/login" className="text-blue-600">
+              Login-here
+            </Link>
+          </span>
+        </p>
       </form>
     </div>
   );

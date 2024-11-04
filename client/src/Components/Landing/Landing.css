@@ -1,6 +1,6 @@
 .landing-container {
   margin-bottom: 1rem;
-  border: 4px solid red;
+  /* border: 4px solid red; */
 }
 
 /* Hero Section */
@@ -9,6 +9,7 @@
   color: #fff;
   padding: 80px 20px;
   margin-bottom: 40px;
+  height: 80vh;
 }
 
 .hero-section h1 {
@@ -35,6 +36,7 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  list-style: none;
 }
 
 .primary-button {
@@ -131,7 +133,7 @@ blockquote {
   display: flex;
   align-items: center;
   background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7)),
-    url(../../assets/hero.jpg);
+    url(../../assets/hero2.jpg);
   background-position: bottom;
   background-size: cover;
   height: 90vh;
@@ -139,17 +141,19 @@ blockquote {
   justify-content: center;
 }
 .hero-part {
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
   width: 80%;
 }
 .hero-headline {
-  color: yellow;
+  /* color: yellow; */
+  color: #007bff;
   margin-bottom: 2rem;
   font-size: 2.9rem;
 }
 
 .hero-subheadline {
-  color: white;
-  font-size: 1.3rem;
+  /* color: white; */
+  color: aqua;
+  font-size: 1.5rem;
   line-height: 4.5;
 }

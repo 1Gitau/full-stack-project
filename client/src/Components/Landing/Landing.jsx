@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 import "./Landing.css";
 
@@ -9,13 +10,15 @@ function Hero() {
         <h1 className="hero-headline">Share your story with the world</h1>
         <p className="hero-subheadline">
           Join BlogIt to express yourself, connect with others, and discover
-          amazing stories from writers around the globe.
+          amazing stories from writers around the globe🌎.
         </p>
         <div className="hero-buttons">
-          <button className="cta-button primary-button">Start Writing</button>
-          <button className="cta-button secondary-button">
+          <Link to="/signup" className="cta-button primary-button">
+            Start Writing
+          </Link>
+          <Link to="/login" className="cta-button secondary-button">
             Explore Stories
-          </button>
+          </Link>
         </div>
       </div>
     </div>

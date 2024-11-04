@@ -9,15 +9,17 @@ import verifyToken from "./controllers/middleware/verifyToken.js";
 
 const client = new PrismaClient();
 const app = express();
-app.use(express.json());
 
+app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: "*",
+    origin: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   }),
 );
+app.use(express.json());
+
 app.use(cookieparser());
 
 app.post("/register", async (req, res) => {
@@ -64,6 +66,7 @@ app.post("/register", async (req, res) => {
 });
 // app.post("/login", async (req, res) )
 app.post("/create-blog", verifyToken, createBlog);
+
 app.post("/login/auth", async (req, res) => {
   try {
     //read the email and password from the user
