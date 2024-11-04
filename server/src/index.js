@@ -6,6 +6,7 @@ import cookieparser from "cookie-parser";
 import bcrypt from "bcryptjs";
 import { createBlog } from "./controllers/Blogs.controllers.js";
 import verifyToken from "./controllers/middleware/verifyToken.js";
+import ValidateBlogs from "./controllers/middleware/ValidateBlogs.js";
 
 const client = new PrismaClient();
 const app = express();
@@ -65,7 +66,7 @@ app.post("/register", async (req, res) => {
   }
 });
 // app.post("/login", async (req, res) )
-app.post("/create-blog", verifyToken, createBlog);
+app.post("/create-blog", verifyToken,ValidateBlogs, createBlog);
 
 app.post("/login/auth", async (req, res) => {
   try {
