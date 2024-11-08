@@ -4,7 +4,13 @@ import cors from "cors";
 import jwt from "jsonwebtoken";
 import cookieparser from "cookie-parser";
 import bcrypt from "bcryptjs";
-import { createBlog } from "./controllers/Blogs.controllers.js";
+import {
+  createBlog,
+  FetchSingleBlog,
+  getUserBlogs,
+  getAllBlogs,
+  deleteBlog,
+} from "./controllers/Blogs.controllers.js";
 import verifyToken from "./controllers/middleware/verifyToken.js";
 import ValidateBlogs from "./controllers/middleware/ValidateBlogs.js";
 
@@ -66,7 +72,11 @@ app.post("/register", async (req, res) => {
   }
 });
 // app.post("/login", async (req, res) )
-app.post("/create-blog", verifyToken,ValidateBlogs, createBlog);
+app.post("/create-blog", verifyToken, ValidateBlogs, createBlog);
+app.get("/blogs/user", verifyToken, getUserBlogs);
+app.get("/blog/:id", verifyToken, FetchSingleBlog);
+app.get("/blogs", verifyToken, getAllBlogs);
+app.delete("/blogs", verifyToken, deleteBlog);
 
 app.post("/login/auth", async (req, res) => {
   try {

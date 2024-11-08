@@ -33,4 +33,7 @@ model Blog {
   body     String
   owner    String
   user     User   @relation(fields: [owner], references: [id])
+
+  @@map("blogs")
 }
+
