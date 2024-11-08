@@ -1,10 +1,15 @@
 import "./header.css";
+import headerLogo from "../../assets/images/logo1.png"
 
 import { Link } from "react-router-dom";
 function HeaderNav() {
   return (
     <div className="navbar">
-      <h2 className="logo">Blogit</h2>
+      <div className="logo-container">
+        <img src={headerLogo} alt="BlogIt" />
+        <h2 className="logo">Blogit</h2>
+      </div>
+    
       <nav>
         <ol className="navigation-list">
           <li className="navigation-list-items">
@@ -22,6 +27,7 @@ function HeaderNav() {
               signup
             </Link>
           </li>
+      
         </ol>
       </nav>
     </div>

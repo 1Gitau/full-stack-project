@@ -40,7 +40,7 @@ export default function Login() {
         duration: 4000,
       });
       setTimeout(() => {
-        navigate("/dashboard");
+        navigate("/writing");
       }, 2000);
     },
 

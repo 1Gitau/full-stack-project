@@ -5,6 +5,16 @@
   background-color: var(--color-header);
   /* border: 2px solid green; */
 }
+.logo-container {
+  display: flex;
+  align-items: center;
+
+  /* border: 2px solid red; */
+}
+
+.logo-container img { 
+  width: 5rem;
+}
 .logo {
   width: 100px;
   /* height: 100px; */

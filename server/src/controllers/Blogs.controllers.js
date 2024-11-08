@@ -6,6 +6,12 @@ export async function createBlog(req, res) {
   try {
     const { imageUrl, title, excerpt, body } = req.body;
     const userId = req.userId;
+    console.log(userId);
+
+    if (!userId) {
+      // If userId is not provided, respond with an error early
+      return res.status(400).json({ message: "User ID is required." });
+    }
 
     const newBlog = await prisma.blog.create({
       data: {
@@ -16,12 +22,16 @@ export async function createBlog(req, res) {
         owner: userId,
       },
     });
-    res.status(201).json(newBlog);
+
+    // Send a successful response
+    return res.status(201).json({ message: "Blog created successfully", blog: newBlog });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "something went wrong.please try again." });
+    // Send error response only if there hasn't been one already
+    return res.status(500).json({ message: error.message
+    });
   }
 }
+
 
 export async function FetchSingleBlog(req, res) {
   try {
@@ -54,9 +64,15 @@ export async function getUserBlogs(req, res) {
       //    user: true,
       //  },
     });
+
+    if (!blogs) {
+      res.status(404).json({ message: "blogs not found" });
+      return;
+    }
     res.status(200).json(blogs);
   } catch (error) {
     res.status(400).json({ message: error.message });
+    return;
   }
 }
 
