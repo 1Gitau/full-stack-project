@@ -1,7 +1,7 @@
 import "./head.css";
 import headerLogo from "../../assets/images/logo1.png"
 
-import userStoreDetails from "../Store/userStoreDetails";
+import userStoreDetails from "../../Store/userStoreDetails";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -34,7 +34,7 @@ function HeadNav() {
             </Link>
           </li>
           <li className="navigation-list-items">
-            <Link className="links" to="/write">
+            <Link className="links" to="/writing">
               Write
             </Link>
           </li>
@@ -45,8 +45,14 @@ function HeadNav() {
           </li>
           <li className="navigation-list-items">
             <Link className="links" to="/blog-listing">
-              My blogs
+              blogs
             </Link>
+          </li>
+          <li className="navigation-list-items">
+            <Link className="links" to="/update-password">
+              My profile
+            </Link>
+            
           </li>
           <li className="navigation-list-items">
             <Link className="links" onClick={handleLogout}>

@@ -1,4 +1,4 @@
-/* Outer container centered with 100% width */
+
 .outer-container {
   display: flex;
   justify-content: center;
@@ -7,7 +7,6 @@
   box-sizing: border-box;
 }
 
-/* Inner container taking up 70% of outer container */
 .writing-container {
   width: 70%;
   max-width: 800px;
@@ -16,8 +15,6 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-
-/* Heading styling */
 .heading {
   color: #1e40af;
   font-size: 2rem;
@@ -26,7 +23,7 @@
   margin-bottom: 1.75rem;
 }
 
-/* Form styles */
+
 form {
   display: flex;
   flex-direction: column;
@@ -50,7 +47,6 @@ form .p-editor-container {
   font-size: 1rem;
 }
 
-/* Make Editor the same width and style as other inputs */
 form .p-editor-container .p-editor-content {
   border-radius: 4px;
   border: 1px solid #ddd;
@@ -66,7 +62,6 @@ form textarea {
   padding: 1rem;
 }
 
-/* Submit button styling */
 .submit-button {
   width: 100%;
   padding: 0.75rem;
@@ -88,7 +83,7 @@ form textarea {
   background-color: #1d4ed8;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
   .writing-container {
     width: 90%;
@@ -99,10 +94,15 @@ form textarea {
   }
 
   form {
-    gap: 1rem;
+    gap: 5rem;
   }
 
   .submit-button {
     font-size: 1rem;
   }
 }
+
+
+
+
+

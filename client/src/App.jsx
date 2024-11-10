@@ -10,10 +10,11 @@ import Writing from "./pages/Writing/Writing";
 import FullBlog from "./Components/FullBlog/FullBlog";
 import BlogFeed from "./Components/BlogsFeed/BlogFeed";
 import BlogListing from "./Components/BlogListing/BlogListing";
-// import AccountSettings from "./Components/updatePassword/updatePasssword";
+import UpdateBlogPage from "./pages/UpdateBlogPage/UpdateBlogPage";
+ import PasswordUpdatePage from "./pages/PasswordUpdatePage/PasswordUpdatePage";
+//  import NewPasswordPage from "./pages/NewPasswordPage/NewPasswordPage";
 import Footer from "./Components/Footer/Footer";
-import userStoreDetails
- from "./Components/Store/userStoreDetails";
+import userStoreDetails from "./Store/userStoreDetails";
 
 
 const client = new QueryClient();
@@ -34,7 +35,10 @@ function App() {
           <Route path="/blog/:id" element={<FullBlog />} />
           <Route path="/blog-listing" element={<BlogListing />} />
           <Route path="/blog-feed" element={<BlogFeed />} />
-          {/* <Route path="/account-settings" element={<AccountSettings />} /> */}
+          <Route path="/update-blog/:id" element={<UpdateBlogPage />} />
+          <Route path="/update-password" element={<PasswordUpdatePage />} />
+          {/* <Route path="/new-password" element={<NewPasswordPage />} /> */}
+         
         </Routes>
         <Footer />
       </BrowserRouter>

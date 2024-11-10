@@ -13,10 +13,10 @@ function Hero() {
           amazing stories from writers around the globe🌎.
         </p>
         <div className="hero-buttons">
-          <Link to="/signup" className="cta-button primary-button">
+          <Link to="/writing" className="cta-button primary-button">
             Start Writing
           </Link>
-          <Link to="/login" className="cta-button secondary-button">
+          <Link to="/blog-listing" className="cta-button secondary-button">
             Explore Stories
           </Link>
         </div>

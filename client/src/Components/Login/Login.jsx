@@ -6,7 +6,7 @@ import { useMutation } from "react-query";
 import { Toaster, toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import userStoreDetails from "../Store/userStoreDetails.js";
+import userStoreDetails from "../../Store/userStoreDetails.js";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -34,13 +34,13 @@ export default function Login() {
       return data;
     },
 
-    onSuccess: (data) => {
-      setUser(data);
+    onSuccess: (user) => {
+      setUser(user);
       toast.success("login successful", {
         duration: 4000,
       });
       setTimeout(() => {
-        navigate("/writing");
+        navigate("/blog-listing");
       }, 2000);
     },
 

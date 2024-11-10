@@ -1,94 +1,105 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import { Editor } from "primereact/editor";
-import { useMutation } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import apiUrl from "../../utils/apiUrl";
 import { useNavigate } from "react-router-dom";
 import { Toaster, toast } from "sonner";
-import './Writing.css';
+// import './Writing.css';
+import { useParams } from "react-router-dom";
 
-function Writing() {
+function UpdateBlog() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [excerpt, setExcerpt] = useState("");
   const [body, setBody] = useState("");
-  const [featuredImage, setFeaturedImage] = useState(null);
 
-  const { mutate, isLoading } = useMutation({
-    mutationFn: async (postData) => {
-      const response = await fetch(`${apiUrl}/create-blog`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(postData),
+
+  const { id: blogId } = useParams();
+
+
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["blog", blogId],
+    queryFn: async () => {
+      const response = await fetch(`${apiUrl}/blog/${blogId}`, {
         credentials: "include",
       });
 
-      if (!response.ok) {
+      if (response.ok === false) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      const data = await response.json();
+      return data;
+    },
+
+    onError: (error) => {
+      toast.error(error.message, { duration: 3000 });
+    },
+  });
+
+  // Populate state variables once the data is successfully loaded
+  useEffect(() => {
+    if (data) {
+      setTitle(data.title);
+      setExcerpt(data.excerpt);
+      setBody(data.body);
+    }
+  }, [data]);
+
+  const {mutate, isLoading: isUpdating} = useMutation({
+    mutationFn: async (updateBlog) => {
+      const response = await fetch(`${apiUrl}/blog/update/${blogId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updateBlog),
+        credentials: "include",
+      });
+
+
+      console.log(response);
+      if (response.ok === false) {
         const error = await response.json();
         throw new Error(error.message);
       }
 
-      return response.json();
+      const data = await response.json();
+      console.log(data);
+      return data;
     },
+
     onSuccess: () => {
-      toast.success("Post created successfully", {
-        duration: 2000,
-      });
+      toast.success("Blog updated successfully", { duration: 3000 });
       setTimeout(() => {
-        navigate("/blog-listing");
+        navigate("/blog-feed");
       }, 2000);
     },
+
     onError: (error) => {
-      toast.error(error.message, {
-        duration: 3000,
-      })
+      toast.error(error.message, { duration: 3000 });
     },
-  });
+  })
 
-  const handleImageUpload = async () => {
-    if (!featuredImage) return null;
+  if (isLoading) {
+    return <p>Loading blog data...</p>;
+  }
 
-    const formData = new FormData();
-    formData.append("file", featuredImage);
-    formData.append("upload_preset", "b6g807uv");
+  if (error) {
+    return <p>Error: {error.message}</p>;
+  }
 
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/ddd1nl0nf/image/upload`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
+ 
 
-    if (!response.ok) {
-      console.error("Error uploading image to Cloudinary");
-      return null;
-    }
 
-    const data = await response.json();
-    return data.secure_url;
-  };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    let imageUrl = "";
-    if (featuredImage) {
-      imageUrl = await handleImageUpload();
-      if (!imageUrl) {
-        alert("Image upload failed. Please try again.");
-        return;
-      }
-    } else {
-      alert("Please select a featured image before submitting.");
-      return;
-    }
 
     const postData = {
       title,
       excerpt,
       body,
-      imageUrl,
     };
+    console.log(postData);
 
     mutate(postData);
   };
@@ -98,55 +109,52 @@ function Writing() {
       <div className="writing-container">
         <Toaster position="top-center" richColors />
         <h1 className="heading">Create New Blog</h1>
-        <form >
-          <div className="mb-4">
-            <label>Featured Image (required)</label>
+        <form onSubmit={handleSubmit}>
+          {/* <div className="mb-4">
+            <label>Featured Image ()</label>
             <input
               type="file"
               accept="image/*"
               onChange={(e) => setFeaturedImage(e.target.files[0])}
-              required
+              
             />
-          </div>
+          </div> */}
           <div className="mb-4">
-            <label>Title (required)</label>
+            <label>Title ()</label>
             <textarea
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter Title here"
               maxLength="150"
-              required
+              
               className="w-full p-2 border rounded"
             />
             <p>{title.length}/100</p>
           </div>
           <div className="mb-4">
-            <label>Excerpt (required)</label>
+            <label>Excerpt ()</label>
             <textarea
               value={excerpt}
               onChange={(e) => setExcerpt(e.target.value)}
               placeholder="Enter Excerpt here"
               maxLength="300"
-              required
+              
               className="w-full p-2 border rounded"
             />
-            <p>{excerpt.length}/300</p>
           </div>
           <div className="mb-4">
-            <label>Body (required)</label>
+            <label>Body ()</label>
             <Editor
               style={{ height: "320px" }}
               value={body}
               onTextChange={(e) => setBody(e.htmlValue)}
             />
-            <p>{body.length}/1000</p>
           </div>
           <div className="flex justify-center">
             <button
               type="submit"
               className="submit-button"
               disabled={isLoading}
-              onClick={handleSubmit}
             >
               {isLoading ? "Please wait..." : "Publish"}
             </button>
@@ -157,4 +165,4 @@ function Writing() {
   );
 }
 
-export default Writing;
+export default UpdateBlog;

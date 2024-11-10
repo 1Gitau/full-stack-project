@@ -14,37 +14,49 @@ function BlogCard({
   excerpt,
   body,
 }){
+
+// Function to limit the excerpt to a certain number of words on the blog listing page
+const getExcerpt = (text, wordLimit) => {
+  // Ensure `text` is a string before splitting
+  if (typeof text !== "string") {
+    return "";
+  }
+
+  const words = text.split(" ");
+  if (words.length > wordLimit) {
+    return words.slice(0, wordLimit).join(" ") + "...";
+  }
+  return text;
+};
+
+// Example usage
+const limitedExcerpt = getExcerpt(excerpt, 20);
+const limitedBody = getExcerpt(body, 10);
+
   return (
     <div className="blog-card">
-      {/* Featured Image */}
+      
       <img src={featuredImage} alt="Featured" className="blog-featured-image" />
 
-      {/* Content */}
+   
       <div className="blog-content">
-        {/* Title */}
+   
         <h3>{title}</h3>
 
-        {/* Author Info */}
+      
         <div className="blog-author-info">
-          {/* Author Avatar or Placeholder */}
-          {/* <img
-            src={authorAvatar || '/path/to/placeholder-icon.png'}
-            alt="Author Avatar"
-            className="author-avatar"
-          /> */}
-
-          {/* Author Username and Date */}
+        
           <span className="author-username">{authorUsername}</span>
-          <span className="post-date">{new Date(updatedAt).toLocaleDateString()}</span>
+          <span className="post-date">{updatedAt}</span>
         </div>
 
-        {/* Excerpt */}
-        <p className="blog-excerpt">{excerpt}</p>
+     
+        <p className="blog-excerpt">{limitedExcerpt}</p>
 
-        {/* Body */}
-        <p className="blog-body">{body}</p>
+      
+        <p className="blog-body">{limitedBody}</p>
 
-        {/* Read More Button */}
+    
         <Link to={`/blog/${id}`} className="read-more-btn">
           Read More
         </Link>
