@@ -9,7 +9,8 @@ import {
   FetchSingleBlog,
   getUserBlogs,
   getAllBlogs,
-  deleteBlog,
+  deleteBlogByOwner,
+  updateBlog
 } from "./controllers/Blogs.controllers.js";
 import verifyToken from "./controllers/middleware/verifyToken.js";
 import ValidateBlogs from "./controllers/middleware/ValidateBlogs.js";
@@ -76,7 +77,10 @@ app.post("/create-blog", verifyToken, ValidateBlogs, createBlog);
 app.get("/blogs/user", verifyToken, getUserBlogs);
 app.get("/blog/:id", verifyToken, FetchSingleBlog);
 app.get("/blogs", verifyToken, getAllBlogs);
-app.delete("/blogs", verifyToken, deleteBlog);
+
+app.delete("/blog/delete/:id", verifyToken, deleteBlogByOwner);
+
+app.put("/blog/update/:id", verifyToken, updateBlog);
 
 app.post("/login/auth", async (req, res) => {
   try {

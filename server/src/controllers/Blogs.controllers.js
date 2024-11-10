@@ -91,12 +91,48 @@ export async function getAllBlogs(_req, res) {
   }
 }
 
-export async function deleteBlog(req, res) {
+
+export async function deleteBlogByOwner(req, res){
   try {
-    const { userId } = req.userId;
-    const { blogId } = req.params;
-    res.send("delete blog");
+    const userId = req.userId;
+    const { id: blogId}  = req.params;
+
+    const deleteBlog =await prisma.blog.delete({
+      where : {
+        id: blogId,
+        owner: userId
+      }
+    });
+
+    res.status(200).json({message: "blog deleted successfully", data: deleteBlog})
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({message: error.message})
+    return;
+  }
+}
+
+export async function updateBlog(req, res){
+  try {
+    const userId = req.userId;
+    const { blogId } = req.params;
+
+    const {title, body, excerpt, imageUrl} = req.body;
+
+    const updateBlog = await prisma.blog.update({
+      where: {
+        id: blogId,
+        owner: userId
+      },
+      data: {
+        title,
+        body,
+        excerpt,
+        imageUrl
+      }
+    });
+
+    res.status(200).json({message: "blog updated successfully", blog: updateBlog})
+  } catch (error) {
+    res.status(500).json({message: error.message})
   }
 }
