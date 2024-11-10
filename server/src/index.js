@@ -14,6 +14,7 @@ import {
 } from "./controllers/Blogs.controllers.js";
 import verifyToken from "./controllers/middleware/verifyToken.js";
 import ValidateBlogs from "./controllers/middleware/ValidateBlogs.js";
+import { updateUserInfo, updateUserPassword } from "./controllers/User.controller.js";
 
 const client = new PrismaClient();
 const app = express();
@@ -22,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: true,
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   }),
 );
@@ -82,6 +83,10 @@ app.delete("/blog/delete/:id", verifyToken, deleteBlogByOwner);
 
 app.put("/blog/update/:id", verifyToken, updateBlog);
 
+app.put("/user/update", verifyToken, updateUserInfo);
+
+app.patch("/user/update-password", verifyToken, updateUserPassword);
+
 app.post("/login/auth", async (req, res) => {
   try {
     //read the email and password from the user
@@ -110,7 +115,7 @@ app.post("/login/auth", async (req, res) => {
     res
       .status(200)
       .cookie("authToken", token, { httpOnly: true })
-      .json({ message: "login successful" });
+      .json(user);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
